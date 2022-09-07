@@ -20,7 +20,7 @@ export default class Linker extends Component {
     let k = "";
     for (let i = 0; i < this.state.text.length; i++) {
       if (
-        (this.state.text.charCodeAt(i) > 64 &&
+        (this.state.text.charCodeAt(i) > 60 &&
           this.state.text.charCodeAt(i) < 91) ||
         (this.state.text.charCodeAt(i) > 96 &&
           this.state.text.charCodeAt(i) < 123) ||
