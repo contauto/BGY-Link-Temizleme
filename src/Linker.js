@@ -25,7 +25,7 @@ export default class Linker extends Component {
         (this.state.text.charCodeAt(i) > 96 &&
           this.state.text.charCodeAt(i) < 123) ||
         (this.state.text.charCodeAt(i) > 44 &&
-          this.state.text.charCodeAt(i) < 59)
+          this.state.text.charCodeAt(i) < 59) || (this.state.text.charCodeAt(i) === 95)
       ) {
         k = k + this.state.text[i];
       } else {
