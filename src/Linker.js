@@ -17,28 +17,31 @@ export default class Linker extends Component {
 
   onClick = (event) => {
     event.preventDefault();
-    let k = "";
+    let uygunLink = "";
     for (let i = 0; i < this.state.text.length; i++) {
       if (
-        (this.state.text.charCodeAt(i) > 60 &&
+        (
+          this.state.text.charCodeAt(i) > 60 &&
           this.state.text.charCodeAt(i) < 91) ||
         (this.state.text.charCodeAt(i) > 96 &&
           this.state.text.charCodeAt(i) < 123) ||
         (this.state.text.charCodeAt(i) > 44 &&
-          this.state.text.charCodeAt(i) < 59) || (this.state.text.charCodeAt(i) === 95)
+          this.state.text.charCodeAt(i) < 59) ||
+        (this.state.text.charCodeAt(i) === 95) ||
+        (this.state.text.charCodeAt(i) === 35)
       ) {
-        k = k + this.state.text[i];
+        uygunLink += this.state.text[i];
       } else {
       }
     }
 
-    if (k.startsWith("https://" || "http://")) {
+    if (uygunLink.startsWith("https://" || "http://")) {
     } else {
-      k = "https://" + k;
+      uygunLink = "https://" + uygunLink;
     }
 
     this.setState({
-      link: k,
+      link: uygunLink,
       visible: true,
     });
   };
@@ -49,11 +52,11 @@ export default class Linker extends Component {
         <nav className="navbar coloring">
           <div className="container-fluid">
             <span className="navbar-brand mb-0 h1 text-white">
-              Link Düzeltici
+              <a className="nav-linki" href="https://github.com/contauto/BGY-Link-Temizleme"> Link Temizleyici</a>
             </span>
           </div>
         </nav>
-        <div className="">
+        <div className="form">
           <div className="mt-5">
             <div>
               <label className="form-label d-flex justify-content-center mt-5 text-white">

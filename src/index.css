@@ -1,11 +1,6 @@
 body {
   background-color: #000000;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   
 }
 
@@ -30,5 +25,15 @@ a{
   
 }
 a:hover{
+  color: #ffffff;
+}
+
+.form{
+  width: 400px;
+  margin: auto;
+  max-width: 70%;
+}
+
+.nav-linki{
   color: #ffffff;
 }
