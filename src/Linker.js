@@ -1,91 +1,128 @@
-import React, { Component } from "react";
 import { ExternalLink } from "react-external-link";
+import { useState } from "react";
 
-export default class Linker extends Component {
-  state = {
+const Linker = () => {
+  const [state, setState] = useState({
     text: null,
     link: null,
     visible: false,
-  };
+  });
 
-  onChange = (event) => {
+  const [darkMode, setDarkMode] = useState(false);
+
+  const onChange = (event) => {
     const value = event.target.value;
-    this.setState({
+    setState({
+      ...state,
       text: value,
     });
   };
 
-  onClick = (event) => {
+  const onClick = (event) => {
     event.preventDefault();
-    let uygunLink = "";
-    for (let i = 0; i < this.state.text.length; i++) {
+    let wantedLink = "";
+    let { text } = state;
+    for (let i = 0; i < state.text.length; i++) {
       if (
-        (
-          this.state.text.charCodeAt(i) > 60 &&
-          this.state.text.charCodeAt(i) < 91) ||
-        (this.state.text.charCodeAt(i) > 96 &&
-          this.state.text.charCodeAt(i) < 123) ||
-        (this.state.text.charCodeAt(i) > 44 &&
-          this.state.text.charCodeAt(i) < 59) ||
-        (this.state.text.charCodeAt(i) === 95) ||
-        (this.state.text.charCodeAt(i) === 35)
+        (text.charCodeAt(i) > 60 && text.charCodeAt(i) < 91) ||
+        (text.charCodeAt(i) > 96 && text.charCodeAt(i) < 123) ||
+        (text.charCodeAt(i) > 44 && text.charCodeAt(i) < 59) ||
+        text.charCodeAt(i) === 95 ||
+        text.charCodeAt(i) === 35
       ) {
-        uygunLink += this.state.text[i];
+        wantedLink += text[i];
       } else {
       }
     }
 
-    if (uygunLink.startsWith("https://" || "http://")) {
+    if (wantedLink.startsWith("https://" || "http://")) {
     } else {
-      uygunLink = "https://" + uygunLink;
+      wantedLink = "https://" + wantedLink;
     }
 
-    this.setState({
-      link: uygunLink,
+    setState({
+      ...state,
+      link: wantedLink,
       visible: true,
     });
   };
 
-  render() {
-    return (
-      <div>
-        <nav className="navbar coloring">
-          <div className="container-fluid">
-            <span className="navbar-brand mb-0 h1 text-white">
-              <a className="nav-linki" href="https://github.com/contauto/BGY-Link-Temizleme"> Link Temizleyici</a>
-            </span>
-          </div>
-        </nav>
-        <div className="form">
-          <div className="mt-5">
-            <div>
-              <label className="form-label d-flex justify-content-center mt-5 text-white">
-                Linkinizi Giriniz
-              </label>
+  const handleCheckBox = (event) => {
+    setDarkMode((current) => !current);
+  };
+
+  let mainDivClass, navClass, linkClass, btnClass;
+  if (darkMode) {
+    mainDivClass = "text-white";
+    navClass = "navbar coloring";
+    linkClass = "mt-5 d-flex justify-content-center text-white";
+    btnClass = "btn btn-dark";
+    document.body.style = "background: dark;";
+  } else {
+    mainDivClass = "text-primary";
+    navClass = "navbar bg-primary";
+    linkClass = "mt-5 d-flex justify-content-center text-primary";
+    btnClass = "btn btn-primary";
+    document.body.style = "background: white;";
+  }
+
+  return (
+    <div className={mainDivClass}>
+      <nav className={navClass}>
+        <div className="container-fluid">
+          <span className="navbar-brand mb-0 h1">
+            <a
+              className="nav-linki"
+              href="https://github.com/contauto/BGY-Link-Temizleme"
+            >
+              {" "}
+              Link Temizleyici
+            </a>
+          </span>
+
+          <span>
+            <div className="form-check form-switch">
               <input
-                className="form-control mt-5"
-                onChange={this.onChange}
-                maxLength={300}
-                type="text"
-              ></input>
-            </div>
-            <div className="mt-5 d-flex justify-content-center">
-              <button className="btn  btn-dark" onClick={this.onClick}>
-                Lütfen Tıklayınız
-              </button>
-            </div>
-            <div>
-              <ExternalLink
-                className="mt-5 d-flex justify-content-center"
-                style={{
-                  visibility: this.state.visible ? "visible" : "hidden",
-                }}
-                href={this.state.link}
+                value={darkMode}
+                className="form-check-input"
+                type="checkbox"
+                onChange={handleCheckBox}
               />
             </div>
+          </span>
+        </div>
+      </nav>
+      <div className="form">
+        <div className="mt-5">
+          <div>
+            <label className="form-label d-flex justify-content-center mt-5">
+              Linkinizi Giriniz
+            </label>
+            <input
+              className="form-control mt-5"
+              onChange={onChange}
+              maxLength={300}
+              type="text"
+            ></input>
+          </div>
+          <div className="mt-5 d-flex justify-content-center">
+            <button className={btnClass} onClick={onClick}>
+              Lütfen Tıklayınız
+            </button>
+          </div>
+          <div>
+            <ExternalLink
+              className={linkClass}
+              style={{
+                visibility: state.visible ? "visible" : "hidden",
+              }}
+              href={state.link}
+            />
           </div>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default Linker;
