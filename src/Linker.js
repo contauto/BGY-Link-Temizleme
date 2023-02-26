@@ -95,9 +95,17 @@ const Linker = () => {
       <div className="form">
         <div className="mt-5">
           <div>
-            <label className="form-label d-flex justify-content-center mt-5">
-              Linkinizi Giriniz
-            </label>
+            {!state.link ? (
+              <label className="form-label d-flex justify-content-center mt-5">
+                Linkinizi Giriniz
+              </label>
+            ) : (
+              <label style={{cursor:"pointer",textDecoration:"underline"}} className="form-label d-flex justify-content-center mt-5"
+                onClick={() => {
+                  navigator.clipboard.writeText(state.link);
+                }}
+              >Kopyala</label>
+            )}
             <input
               className="form-control mt-5"
               onChange={onChange}
