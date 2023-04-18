@@ -1,5 +1,5 @@
-# Bgy link temizleyici
+# Link Temizleyici
 
 İçinde emoji olan linki yapıştırıp tıklayınız
 
-link : https://bgylinkduzeltici.netlify.app/
+Link : https://bgylinkduzeltici.netlify.app/

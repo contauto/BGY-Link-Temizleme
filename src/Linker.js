@@ -8,7 +8,7 @@ const Linker = () => {
     visible: false,
   });
 
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
 
   const onChange = (event) => {
     const value = event.target.value;
@@ -47,7 +47,7 @@ const Linker = () => {
     });
   };
 
-  const handleCheckBox = (event) => {
+  const handleCheckBox = () => {
     setDarkMode((current) => !current);
   };
 
