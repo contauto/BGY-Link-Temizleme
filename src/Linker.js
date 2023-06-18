@@ -1,14 +1,17 @@
 import { ExternalLink } from "react-external-link";
 import { useState } from "react";
-
+import Table from "./Table";
 const Linker = () => {
   const [state, setState] = useState({
     text: null,
     link: null,
     visible: false,
+    type:null,
   });
 
   const [darkMode, setDarkMode] = useState(true);
+
+  const disable=state.text===null||state.text===undefined||state.text?.length<1;
 
   const onChange = (event) => {
     const value = event.target.value;
@@ -18,8 +21,7 @@ const Linker = () => {
     });
   };
 
-  const onClick = (event) => {
-    event.preventDefault();
+  const onClickClean = () => {
     let wantedLink = "";
     let { text } = state;
     for (let i = 0; i < state.text.length; i++) {
@@ -34,18 +36,34 @@ const Linker = () => {
       } else {
       }
     }
-
     if (wantedLink.startsWith("https://" || "http://")) {
     } else {
       wantedLink = "https://" + wantedLink;
     }
 
+    const oldLocalStorage = localStorage.getItem("link")?localStorage.getItem("link")+",":"";
+    localStorage.setItem("link",oldLocalStorage + `[${wantedLink}, Temiz]`);
     setState({
       ...state,
       link: wantedLink,
       visible: true,
+      type: "clean",
     });
   };
+
+
+  const onClickRuin = () => {
+    const { text } = state;
+    const wantedLink = text.replace(/\./g, '.😎');
+    const oldLocalStorage = localStorage.getItem("link")?localStorage.getItem("link")+",":"";
+    localStorage.setItem("link",oldLocalStorage + `[${wantedLink}, Bozuk]`);
+    setState({
+      ...state,
+      link: wantedLink,
+      visible: true,
+      type: "ruin",
+    });
+  }
 
   const handleCheckBox = () => {
     setDarkMode((current) => !current);
@@ -84,7 +102,7 @@ const Linker = () => {
             <div className="form-check form-switch">
               <input
                 value={darkMode}
-                className="form-check-input"
+                className="form-check-input bg-secondary"
                 type="checkbox"
                 onChange={handleCheckBox}
               />
@@ -114,20 +132,28 @@ const Linker = () => {
             ></input>
           </div>
           <div className="mt-5 d-flex justify-content-center">
-            <button className={btnClass} onClick={onClick}>
-              Lütfen Tıklayınız
+            <button type="button" disabled={disable} className={btnClass} onClick={onClickClean}>
+              Temizle
+            </button>
+            <button type="button" disabled={disable} className={btnClass+ " ms-2"} onClick={onClickRuin}>
+              Boz
             </button>
           </div>
           <div>
             <ExternalLink
               className={linkClass}
               style={{
-                visibility: state.visible ? "visible" : "hidden",
+                visibility: state.visible&&state.type==="clean" ? "visible" : "hidden",
               }}
               href={state.link}
-            />
+            >
+              <span>Siteye Gidin</span>
+            </ExternalLink>
           </div>
         </div>
+      </div>
+      <div className="justify-content-center d-flex mt-5">
+      <Table/>
       </div>
     </div>
   );
