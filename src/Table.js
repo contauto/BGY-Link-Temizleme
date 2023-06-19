@@ -1,5 +1,6 @@
 import React from 'react';
 import {DataGrid} from "@mui/x-data-grid";
+import { useMediaQuery } from '@mui/material';
 
 function Table() {
     const links= localStorage.getItem("link")?localStorage.getItem("link"):[];
@@ -18,12 +19,17 @@ function Table() {
         }
     },[]):[]
 
+    const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+const width = isMobile ? 350 : 500;
+    const mobileColumns = isMobile ? columns.filter((column) => column.field === 'link') : columns;
+
+
     return (
         <div>
-            <div style={{ height: 400, width: 400 }}>
+            <div style={{ height: 400, width: width }}>
             <DataGrid
                 rows={rows}
-                columns={columns}
+                columns={mobileColumns}
                 pageSize={5}
                 rowsPerPageOptions={[5]}
                 checkboxSelection
