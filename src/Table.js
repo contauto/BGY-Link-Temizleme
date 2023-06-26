@@ -35,6 +35,10 @@ const width = isMobile ? 350 : 500;
                 checkboxSelection
                 sx={{ bgcolor: 'white' }}
             />
+                <div className=" justify-content-center d-flex mt-5">
+                    <button className="btn btn-danger" onClick={()=>{localStorage.removeItem("link");window.location.reload()}}>Temizle</button>
+                </div>
+
         </div>
         </div>
     );
